@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view class="container">
+  <input bindinput="inputSource" placeholder="type sth." bindblur="inputClear" value="{{currentInput}}" />
+  <button bindtap="submit">提交</button>
+  <view wx:for="{{list}}">
+    <text>{{ item }}</text>
+  </view>
+</view>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h1>WebSocket</h1>
+  <script>
+    window.addEventListener("load", function () {
+        var connection = new WebSocket("wss://127.0.0.1:65500")
+        connection.onopen = function () {
+          console.log("Connection opened")
+          document.getElementById("form").onsubmit = function (event) {
+            var msg = document.getElementById("msg")
+            if (msg.value) {
+              connection.send(JSON.stringify({from: 'browser', content: msg.value}))
+            }
+            msg.value = ""
+            event.preventDefault()
+          }
+        }
+        connection.onclose = function () {
+          console.log("Connection closed")
+        }
+        connection.onerror = function () {
+          console.error("Connection error")
+        }
+        connection.onmessage = function (event) {
+          var div = document.createElement("div")
+          div.textContent = event.data
+          document.body.appendChild(div)
+        }
+    })
+
+  </script>
+
+
+  <form id="form">
+Message: <input size="50" id="msg"> <input type="submit" value="Submit">
+</form>
+</body>
+
+</html>
